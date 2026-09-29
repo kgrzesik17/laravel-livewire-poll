@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Option;
 use Livewire\Component;
 
 class Polls extends Component
@@ -13,8 +14,13 @@ class Polls extends Component
 
     public function render()
     {
+        // fetch all the polls with all their options
         $polls = \App\Models\Poll::with('options.votes')->latest()->get();
 
         return view('livewire.polls', ['polls' => $polls]);
+    }
+
+    public function vote(Option $option) {
+        $option->votes()->create();
     }
 }
